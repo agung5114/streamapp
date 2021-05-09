@@ -288,5 +288,7 @@ elif choice == "PPK":
         st.title(f"Prediksi PPK: {nilai:.2f}")
         st.subheader(f"Perubahan PPK: {(nilai-j):.2f}")
 
+        
+        
 # if __name__=='__main__':
 #     main()
