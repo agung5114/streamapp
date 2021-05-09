@@ -133,8 +133,8 @@ python-utils==2.5.6
 pythreejs==2.3.0
 pytz==2021.1
 pyviz-comms==2.0.1
-pywin32==300
-pywinpty==1.0.1
+#pywin32==300
+#pywinpty==1.0.1
 PyYAML==5.4.1
 pyzmq==22.0.3
 requests==2.25.1
