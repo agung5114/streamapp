@@ -20,32 +20,77 @@ choice = st.sidebar.selectbox('Select Menu', menu)
 if choice == "Allocation & Outcome":
     st.subheader("Alokasi Anggaran dan Prediksi Perubahan Index")
     df = pd.read_excel('belanja_apbd_full.xlsx')
+    new = df["nama_pemda"].str.split(" ", n = 1, expand = True)
+    df["jenispemda"]= new[0]
+    df["namapemda"]= new[1]
+    # df.drop(columns =["nama_pemda"], inplace = True)
+    df['wilayah'] = np.where(df['jenispemda'].str.contains("Provinsi"), "Provinsi", "Kab_Kota")
+    wilayah = st.selectbox('Pilih Jenis Wilayah',['Provinsi','Kab_Kota'])
+    if wilayah == 'Provinsi':
+        df = df[df['wilayah'].isin(['Provinsi'])]
+    else:
+        df = df[df['wilayah'].isin(['Kab_Kota'])]
     lokasi = df['nama_pemda'].unique()
     kota = st.selectbox('Pilih Daerah',lokasi)
     df = df[df['nama_pemda'].isin([kota])]
     df = df[df['Tahun'].isin([2019])]
+    lybudget = df.sum(axis=1)
     pop = df['Populasi'].sum()
     base_ipm = df['Base_IPM'].sum()
     base_ahh = df['Base_AHH'].sum()
     base_hls = df['Base_HLS'].sum()
     base_rls = df['Base_RLS'].sum()
     base_ppk = df['Base_PPK'].sum()
+    df['Total_Anggaran'] = df.sum(axis=1)
+    ekvalue=df['Ekonomi']/df["Total_Anggaran"]
+    ksvalue=df['Kesehatan']/df["Total_Anggaran"]
+    ktvalue=df['Ketertiban']/df["Total_Anggaran"]
+    lkvalue=df['Lingkungan']/df["Total_Anggaran"]
+    pbvalue=df['ParBud']/df["Total_Anggaran"]
+    plvalue=df['Pelayanan']/df["Total_Anggaran"]
+    pdvalue=df['Pendidikan']/df["Total_Anggaran"]
+    sovalue=df['Sosial']/df["Total_Anggaran"]
+    fsvalue=df['Rumah_Fasum']/df["Total_Anggaran"]
     st.write(f"Total Populasi: {pop:.0f} (2019)")
-    base = st.number_input(label="Total Anggaran",value=10000000000,min_value=0, max_value=1000000000000000, step=1)
+    base = st.number_input(label="Total Anggaran",value=int(lybudget.values),min_value=0, max_value=1000000000000000, step=1)
     perkapita = st.write(f"Anggaran Perkapita: {base/pop:.2f}")
-    c1, c2 = st.beta_columns((1, 1))
+    c1, c2 ,c3, c4= st.beta_columns((1,1,1,2))
     with c1:
-        st.subheader("Alokasi Anggaran ( % )")
-        a = st.number_input(label="Ekonomi",value=10,min_value=0, max_value=100, step=1)
-        b = st.number_input(label="Kesehatan",value=10,min_value=0, max_value=100, step=1)
-        c = st.number_input(label="Ketertiban",value=10,min_value=0, max_value=100, step=1)
-        d = st.number_input(label="Lingkungan",value=10,min_value=0, max_value=100, step=1)
-        e = st.number_input(label="Pariwisata Budaya",value=10,min_value=0, max_value=100, step=1)
-        f = st.number_input(label="Pelayanan",value=10,min_value=0, max_value=100, step=1)
-        g = st.number_input(label="Pendidikan",value=20,min_value=0, max_value=100, step=1)
-        h = st.number_input(label="Sosial",value=10,min_value=0, max_value=100, step=1)
-        i = st.number_input(label="Rumah_Fasum",value=10,min_value=0, max_value=100, step=1)
+        st.subheader("Alokasi Tahun Sebelumnya (Rp)")
+        st.text_input(label="Ekonomi",value=df['Ekonomi'].sum())
+        st.text_input(label="Kesehatan",value=df['Kesehatan'].sum())
+        st.text_input(label="Ketertiban",value=df['Ketertiban'].sum())
+        st.text_input(label="Lingkungan",value=df['Lingkungan'].sum())
+        st.text_input(label="Pariwisata Budaya",value=df['ParBud'].sum())
+        st.text_input(label="Pelayanan",value=df['Pelayanan'].sum())
+        st.text_input(label="Pendidikan",value=df['Pendidikan'].sum())
+        st.text_input(label="Sosial",value=df['Sosial'].sum())
+        st.text_input(label="Rumah_Fasum",value=df['Rumah_Fasum'].sum())
     with c2:
+        st.subheader("Proporsi Alokasi Anggaran (%)")
+        a = st.number_input(label="Ekonomi",value=100*float(ekvalue.values),min_value=0.0, max_value=100.0, step=1.0)
+        b = st.number_input(label="Kesehatan",value=100*float(ksvalue.values),min_value=0.0, max_value=100.0, step=1.0)
+        c = st.number_input(label="Ketertiban",value=100*float(ktvalue.values),min_value=0.0, max_value=100.0, step=1.0)
+        d = st.number_input(label="Lingkungan",value=100*float(lkvalue.values),min_value=0.0, max_value=100.0, step=1.0)
+        e = st.number_input(label="Pariwisata Budaya",value=100*float(pbvalue.values),min_value=0.0, max_value=100.0, step=1.0)
+        f = st.number_input(label="Pelayanan",value=100*float(plvalue.values),min_value=0.0, max_value=100.0, step=1.0)
+        g = st.number_input(label="Pendidikan",value=100*float(pdvalue.values),min_value=0.0, max_value=100.0, step=1.0)
+        h = st.number_input(label="Sosial",value=100*float(sovalue.values),min_value=0.0, max_value=100.0, step=1.0)
+        i = st.number_input(label="Rumah_Fasum",value=100*float(fsvalue.values),min_value=0.0, max_value=100.0, step=1.0)
+    
+    with c3:
+        st.subheader("Jumlah Anggaran Dialokasikan (Rp)")
+        st.text_input(label="Ekonomi",value=int(base*a/100))
+        st.text_input(label="Kesehatan",value=int(base*b/100))
+        st.text_input(label="Ketertiban",value=int(base*c/100))
+        st.text_input(label="Lingkungan",value=int(base*d/100))
+        st.text_input(label="Pariwisata Budaya",value=int(base*e/100))
+        st.text_input(label="Pelayanan",value=int(base*f/100))
+        st.text_input(label="Pendidikan",value=int(base*g/100))
+        st.text_input(label="Sosial",value=int(base*h/100))
+        st.text_input(label="Rumah_Fasum",value=int(base*i/100))
+        
+    with c4:
         st.subheader("Prediksi Perubahan Index")
         index = st.selectbox('Pilih Index',['IPM','AHH','HLS','RLS','PPK'])
         if index == "IPM":
@@ -64,12 +109,9 @@ if choice == "Allocation & Outcome":
             st.subheader("Nilai PPK Awal")
             j = st.number_input(label="Base_PPK",value=base_ppk,min_value=0, max_value=30000, step=100)
 
-        if (a+b+c+d+e+f+g+h+i) >100:
-            st.subheader("Total Alokasi Melebihi 100 persen anggaran")
-        elif (a+b+c+d+e+f+g+h+i) <100:
-            st.subheader("Total Alokasi Belum mencapai 100 persen anggaran")
-        else:
-            st.subheader("Anggaran sudah teralokasikan sepenuhnya")
+        total = a+b+c+d+e+f+g+h+i
+        # st.subheader("Total Alokasi Anggaran: "+str(total)+"%")
+        st.subheader(f"Anggaran Perkapita: {total:.2f} %")
 
         if index == "IPM":
             model= open("ipm_gb.pkl", "rb")
@@ -123,8 +165,9 @@ if choice == "Allocation & Outcome":
 elif choice == 'Anomali':
     st.subheader('Analisis atas Anomali dalam Alokasi Anggaran dan Tingkat Perubahan Index')
     if st.checkbox("Exploratory Data Analysis"):
-        df = pd.read_csv('belanja_apbd.csv',sep=";",usecols=["nama_pemda","Tahun","Ekonomi","Kesehatan","Ketertiban","Lingkungan","ParBud","Pelayanan","Pendidikan","Sosial","Rumah_Fasum","Populasi"])
+        # df = pd.read_csv('belanja_apbd.csv',sep=";",usecols=["nama_pemda","Tahun","Ekonomi","Kesehatan","Ketertiban","Lingkungan","ParBud","Pelayanan","Pendidikan","Sosial","Rumah_Fasum","Populasi"])
         # st.subheader('Automated Exploratory Data Analysis')
+        df = pd.read_excel('belanja_apbd_full.xlsx')
         df.loc[:,'Total'] = df.sum(numeric_only=True, axis=1)
         st.dataframe(df.head())
         if st.checkbox('Show Shape'):
@@ -173,12 +216,24 @@ elif choice == 'Anomali':
             st.pyplot()
         
     if st.checkbox("Analisis Anggaran vs Index"):
-        df = pd.read_csv('belanja_apbd.csv',sep=";")
+        # df = pd.read_csv('belanja_apbd.csv',sep=";")
+        df = pd.read_excel('belanja_apbd_full.xlsx')
         df.loc[:,'Total_anggaran'] = df.sum(numeric_only=True, axis=1)
         st.subheader('Anomali Detection from Trends and Outliers Analysis ')
         index = st.selectbox('Pilih Index',['IPM','AHH','HLS','RLS','PPK'])
         anggaran = st.selectbox('Pilih Jenis Fungsi',["All","Ekonomi","Kesehatan","Ketertiban","Lingkungan","ParBud","Pelayanan","Pendidikan","Sosial","Rumah_Fasum"])
         pemda = st.multiselect('Pilih Pemda',df['nama_pemda'])
+        df['TotalPerkapita'] = df['Total_anggaran']/df['Populasi']
+        df['ek'] = df['Ekonomi']/df['Populasi']
+        df['ks'] = df['Kesehatan']/df['Populasi']
+        df['kt'] = df['Ketertiban']/df['Populasi']
+        df['lk'] = df['Lingkungan']/df['Populasi']
+        df['pb'] = df['ParBud']/df['Populasi']
+        df['pl'] = df['Pelayanan']/df['Populasi']
+        df['pd'] = df['Pendidikan']/df['Populasi']
+        df['so'] = df['Sosial']/df['Populasi']
+        df['fs'] = df['Rumah_Fasum']/df['Populasi']
+
         c1, c2 = st.beta_columns((1, 1))
         df["Tahun"] = df["Tahun"].astype(str)
         # st.write(pemda)
@@ -189,25 +244,25 @@ elif choice == 'Anomali':
                 dfp = df[df['nama_pemda'].isin(pemda)]
 
             if anggaran == "All":
-                fig1 = px.scatter(dfp, x='nama_pemda', y='Total_anggaran',color='Tahun')
+                fig1 = px.scatter(dfp, x='nama_pemda', y='TotalPerkapita',color='Tahun')
             elif anggaran == "Ekonomi":
-                fig1 = px.scatter(dfp, x='nama_pemda', y="Ekonomi",color='Tahun')
+                fig1 = px.scatter(dfp, x='nama_pemda', y="ek",color='Tahun')
             elif anggaran == "Kesehatan":
-                fig1 = px.scatter(dfp, x='nama_pemda', y="Kesehatan",color='Tahun')
+                fig1 = px.scatter(dfp, x='nama_pemda', y="ks",color='Tahun')
             elif anggaran == "Ketertiban":
-                fig1 = px.scatter(dfp, x='nama_pemda', y="Ketertiban",color='Tahun')
+                fig1 = px.scatter(dfp, x='nama_pemda', y="kt",color='Tahun')
             elif anggaran == "Lingkungan":
-                fig1 = px.scatter(dfp, x='nama_pemda', y="Lingkungan",color='Tahun')
+                fig1 = px.scatter(dfp, x='nama_pemda', y="lk",color='Tahun')
             elif anggaran == "ParBud":
-                fig1 = px.scatter(dfp, x='nama_pemda', y="ParBud",color='Tahun')
+                fig1 = px.scatter(dfp, x='nama_pemda', y="pb",color='Tahun')
             elif anggaran == "Pelayanan":
-                fig1 = px.scatter(dfp, x='nama_pemda', y='Total_anggaran',color='Tahun')
+                fig1 = px.scatter(dfp, x='nama_pemda', y='pl',color='Tahun')
             elif anggaran == "Pendidikan":
-                fig1 = px.scatter(dfp, x='nama_pemda', y="Pelayanan",color='Tahun')
+                fig1 = px.scatter(dfp, x='nama_pemda', y="pd",color='Tahun')
             elif anggaran == "Sosial":
-                fig1 = px.scatter(dfp, x='nama_pemda', y="Sosial",color='Tahun')
+                fig1 = px.scatter(dfp, x='nama_pemda', y="so",color='Tahun')
             elif anggaran == "Rumah_Fasum":
-                fig1 = px.scatter(dfp, x='nama_pemda', y="Rumah_Fasum",color='Tahun')
+                fig1 = px.scatter(dfp, x='nama_pemda', y="fs",color='Tahun')
             st.plotly_chart(fig1)
 
         with c2:
@@ -215,7 +270,6 @@ elif choice == 'Anomali':
                 dfp = df
             else:
                 dfp = df[df['nama_pemda'].isin(pemda)]
-                        
             if index == "IPM":
                 fig2 = px.scatter(dfp, x='nama_pemda', y='Base_IPM',color='Tahun')
             elif index == "AHH":
@@ -226,6 +280,5 @@ elif choice == 'Anomali':
                 fig2 = px.scatter(dfp, x='nama_pemda', y='Base_RLS',color='Tahun')
             elif index == "PPK":
                 fig2 = px.scatter(dfp, x='nama_pemda', y='Base_PPK',color='Tahun')
-            fig2.update_layout(yaxis={'categoryorder':'total descending'})
+            # fig2.update_layout(yaxis={'categoryorder':'total descending'})
             st.plotly_chart(fig2)
-
