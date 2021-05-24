@@ -15,6 +15,8 @@ st.title('ALONA: Allocation - Outcome - Anomali')
 # jump = st.sidebar.selectbox('Select Pages', pages)
 
 menu = ['Anomali','Allocation & Outcome']
+alona= Image.open('logo_alona.png')
+st.sidebar.image(alona)
 choice = st.sidebar.selectbox('Select Menu', menu)
 
 if choice == "Allocation & Outcome":
