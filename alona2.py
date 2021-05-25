@@ -215,7 +215,7 @@ elif choice == 'Anomali':
         if st.checkbox('Show Summary'):
             st.write(df.describe())
         if st.checkbox('Correlation Matrix'):
-            st.write(sns.heatmap(df.corr(),annot=True))
+            st.write(sns.heatmap(df.corr(),annot=True,annot_kws={"size": 3.8}))
             st.pyplot()
         plot_type = st.selectbox('Select Type of Plot',["bar","line","area","hist","box"])
         all_columns = ["Total","Ekonomi","Kesehatan","Ketertiban","Lingkungan","ParBud","Pelayanan","Pendidikan","Sosial","Rumah_Fasum","Populasi"]
