@@ -131,7 +131,7 @@ if choice == "Allocation & Outcome":
     with c4:
         st.write("")
     with c5:
-        st.subheader("Prediksi Perubahan Index Berdasarkan Machine-Learning Models")
+        st.subheader("Prediksi Perubahan Index  \nBerdasarkan Machine-Learning Models")
         index = st.selectbox('Pilih Index',['IPM','AHH','HLS','RLS','PPK'])
         if index == "IPM":
             st.subheader("Nilai IPM Awal")
