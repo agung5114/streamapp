@@ -92,7 +92,7 @@ if choice == "Allocation & Outcome":
     with k3:
         perkapita = st.write(f"Anggaran Perkapita Akan Dialokasikan: {base/pop:.2f}")
 
-    c1, c2 ,c3, c4= st.beta_columns((1,1,1,2))
+    c1, c2 ,c3, c4, c5= st.beta_columns((1,1,1,0.5,2))
     with c1:
         st.subheader("Alokasi Tahun Sebelumnya (Rp)")
         st.text_input(label="Ekonomi",value=df['Ekonomi'].sum())
@@ -129,6 +129,8 @@ if choice == "Allocation & Outcome":
         st.text_input(label="Rumah_Fasum",value=int(base*i/100))
         
     with c4:
+        st.write("")
+    with c5:
         st.subheader("Prediksi Perubahan Index")
         index = st.selectbox('Pilih Index',['IPM','AHH','HLS','RLS','PPK'])
         if index == "IPM":
