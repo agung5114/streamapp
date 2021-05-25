@@ -27,35 +27,71 @@ if choice == "Allocation & Outcome":
     df["namapemda"]= new[1]
     # df.drop(columns =["nama_pemda"], inplace = True)
     df['wilayah'] = np.where(df['jenispemda'].str.contains("Provinsi"), "Provinsi", "Kab_Kota")
-    wilayah = st.selectbox('Pilih Jenis Wilayah',['Provinsi','Kab_Kota'])
-    if wilayah == 'Provinsi':
-        df = df[df['wilayah'].isin(['Provinsi'])]
-    else:
-        df = df[df['wilayah'].isin(['Kab_Kota'])]
-    lokasi = df['nama_pemda'].unique()
-    kota = st.selectbox('Pilih Daerah',lokasi)
-    df = df[df['nama_pemda'].isin([kota])]
-    df = df[df['Tahun'].isin([2019])]
-    lybudget = df.sum(axis=1)
-    pop = df['Populasi'].sum()
-    base_ipm = df['Base_IPM'].sum()
-    base_ahh = df['Base_AHH'].sum()
-    base_hls = df['Base_HLS'].sum()
-    base_rls = df['Base_RLS'].sum()
-    base_ppk = df['Base_PPK'].sum()
-    df['Total_Anggaran'] = df.sum(axis=1)
-    ekvalue=df['Ekonomi']/df["Total_Anggaran"]
-    ksvalue=df['Kesehatan']/df["Total_Anggaran"]
-    ktvalue=df['Ketertiban']/df["Total_Anggaran"]
-    lkvalue=df['Lingkungan']/df["Total_Anggaran"]
-    pbvalue=df['ParBud']/df["Total_Anggaran"]
-    plvalue=df['Pelayanan']/df["Total_Anggaran"]
-    pdvalue=df['Pendidikan']/df["Total_Anggaran"]
-    sovalue=df['Sosial']/df["Total_Anggaran"]
-    fsvalue=df['Rumah_Fasum']/df["Total_Anggaran"]
-    st.write(f"Total Populasi: {pop:.0f} (2019)")
-    base = st.number_input(label="Total Anggaran",value=int(lybudget.values),min_value=0, max_value=1000000000000000, step=1)
-    perkapita = st.write(f"Anggaran Perkapita: {base/pop:.2f}")
+    p1, p2, p3 = st.beta_columns((4,0.5,4))
+    with p1:
+        wilayah = st.selectbox('Pilih Jenis Wilayah',['Provinsi','Kab_Kota'])
+        if wilayah == 'Provinsi':
+            df = df[df['wilayah'].isin(['Provinsi'])]
+        else:
+            df = df[df['wilayah'].isin(['Kab_Kota'])]
+        lokasi = df['nama_pemda'].unique()
+        kota = st.selectbox('Pilih Daerah',lokasi)
+        df = df[df['nama_pemda'].isin([kota])]
+        df = df[df['Tahun'].isin([2019])]
+        lybudget = df.sum(axis=1)
+        pop = df['Populasi'].sum()
+        base_ipm = df['Base_IPM'].sum()
+        base_ahh = df['Base_AHH'].sum()
+        base_hls = df['Base_HLS'].sum()
+        base_rls = df['Base_RLS'].sum()
+        base_ppk = df['Base_PPK'].sum()
+        df['Total_Anggaran'] = df.sum(axis=1)
+        ekvalue=df['Ekonomi']/df["Total_Anggaran"]
+        ksvalue=df['Kesehatan']/df["Total_Anggaran"]
+        ktvalue=df['Ketertiban']/df["Total_Anggaran"]
+        lkvalue=df['Lingkungan']/df["Total_Anggaran"]
+        pbvalue=df['ParBud']/df["Total_Anggaran"]
+        plvalue=df['Pelayanan']/df["Total_Anggaran"]
+        pdvalue=df['Pendidikan']/df["Total_Anggaran"]
+        sovalue=df['Sosial']/df["Total_Anggaran"]
+        fsvalue=df['Rumah_Fasum']/df["Total_Anggaran"]
+    with p2:
+        st.write("")
+    with p3:
+        # st.write(f"Total Populasi: {pop:.0f} (2019)")
+        lytotal = st.text_input(label="Total Anggaran Tahun Terakhir",value=int(lybudget.values))
+        lypkp = st.text_input(label="Anggaran Perkapita",value=int(lybudget.values/pop))
+        # perkapita = st.write(f"Anggaran Perkapita Akan Dialokasikan: {base/pop:.2f}")
+    # with p3:
+    #     st.write(" ")
+    t1, t2 ,t3,t4= st.beta_columns((4,0.5,2,2))
+    with t1:
+        st.text_input(label="Total Populasi",value=int(pop))
+        # st.write('(Populasi Penduduk Tahun 2019)')
+    with t2:
+        st.write(" ")
+    with t3:
+        # st.text_input(label="% Perubahan Anggaran: ",value=str(int(100*((base-lybudget.values)/lybudget.values)))+" %")
+        # st.text_input(label="% Perubahan Perkapita: ",value=str(int(100*((base/pop-lybudget.values/pop)/lybudget.values/pop)))+" %")
+        basechange = st.number_input(label="% Penyesuaian Anggaran",value=0,min_value=-100, max_value=100, step=5)
+        allbase = int((basechange/100)*int(lybudget.values)+int(lybudget.values))
+    with t4:
+        # allbase = lybudget.values
+        # alcpkp = lybudget.values/pop
+        # base = st.number_input(label="Total Anggaran Akan Dialokasikan",value=allbase,min_value=0, max_value=1000000000000000)
+        base = st.number_input(label="Total Anggaran Akan Dialokasikan",value=allbase,min_value=0, max_value=1000000000000000,step=10000000000)
+        # base = int(base)
+        # pkp = st.text_input(label="Anggaran Perkapita Akan Dialokasikan",value=alpkp)
+    # perkapita = st.write(f"Anggaran Perkapita Akan Dialokasikan: {base/pop:.2f}")
+
+    k1,k2,k3= st.beta_columns((4,0.5,4))
+    with k1:
+        st.write('(Populasi Penduduk Tahun 2019)')
+    with k2:
+        st.write(" ")
+    with k3:
+        perkapita = st.write(f"Anggaran Perkapita Akan Dialokasikan: {base/pop:.2f}")
+
     c1, c2 ,c3, c4= st.beta_columns((1,1,1,2))
     with c1:
         st.subheader("Alokasi Tahun Sebelumnya (Rp)")
@@ -86,7 +122,7 @@ if choice == "Allocation & Outcome":
         st.text_input(label="Kesehatan",value=int(base*b/100))
         st.text_input(label="Ketertiban",value=int(base*c/100))
         st.text_input(label="Lingkungan",value=int(base*d/100))
-        st.text_input(label="Pariwisata Budaya",value=int(base*e/100))
+        st.text_input(label="Pariwisata_Budaya",value=int(base*e/100))
         st.text_input(label="Pelayanan",value=int(base*f/100))
         st.text_input(label="Pendidikan",value=int(base*g/100))
         st.text_input(label="Sosial",value=int(base*h/100))
@@ -113,7 +149,7 @@ if choice == "Allocation & Outcome":
 
         total = a+b+c+d+e+f+g+h+i
         # st.subheader("Total Alokasi Anggaran: "+str(total)+"%")
-        st.subheader(f"Anggaran Perkapita: {total:.2f} %")
+        st.subheader(f"Total Anggaran Dialokasikan: {total:.2f} %")
 
         if index == "IPM":
             model= open("ipm_gb.pkl", "rb")
@@ -160,7 +196,7 @@ if choice == "Allocation & Outcome":
                     'Rumah_Fasump',
                     'Base_PPK']])
             prediction = pkl.predict(input_variables)
-            nilai = 100*float(prediction)
+            nilai = j+float(prediction)
             st.title(f"Prediksi Index: {nilai:.2f}")
             st.subheader(f"Perubahan Index: {(nilai-j):.2f}")
 
@@ -284,3 +320,4 @@ elif choice == 'Anomali':
                 fig2 = px.scatter(dfp, x='nama_pemda', y='Base_PPK',color='Tahun')
             # fig2.update_layout(yaxis={'categoryorder':'total descending'})
             st.plotly_chart(fig2)
+
