@@ -51,6 +51,7 @@ with t2:
         Xpca = nlp_plot(dfwc)
         fig0=px.scatter_3d(data, x=Xpca[:, 0], y=Xpca[:, 1], z=Xpca[:, 2]
                     ,color= 'label',title='Klaster Anggaran')
+        fig0.update_layout(height=500)
     else:
         output = int(output)
         data = data[data['label'].isin([output])]
