@@ -57,9 +57,9 @@ with t2:
         cek = data['data']
         wordcloud = WordCloud (
                     background_color = 'white',
-                    width = 512,
+                    width = 800,
                     stopwords =['belanja','pendapatan','lra','transfer','dan','kepada','yang'],
-                    height = 350
+                    height = 500
                         ).generate(' '.join(cek))
         fig0 = px.imshow(wordcloud,title=f'Wordcloud Klaster Anggaran {output}')
     st.plotly_chart(fig0)
