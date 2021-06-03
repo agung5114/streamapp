@@ -7,7 +7,6 @@ import seaborn as sns
 st.set_option('deprecation.showPyplotGlobalUse', False)
 # load model 
 import joblib
-import vaex as vx
 
 st.set_page_config(layout="wide")
 st.title('ALONA: Allocation - Outcome - Anomali')
