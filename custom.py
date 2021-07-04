@@ -114,14 +114,14 @@ elif choice == "Sample Story":
     
 elif choice == "Sample Prediction":
     st.subheader("Prediction from Model")
-    model= open("iris/model.pkl", "rb")
+    model= open("model.pkl", "rb")
     knn_clf=joblib.load(model)
     st.title("Iris flower species Classification App")
 
     #Loading images
-    setosa= Image.open('iris/setosa.png')
-    versicolor= Image.open('iris/versicolor.png')
-    virginica = Image.open('iris/virginica.png')
+    setosa= Image.open('setosa.png')
+    versicolor= Image.open('versicolor.png')
+    virginica = Image.open('virginica.png')
 
     st.sidebar.title("Features")
     #Intializing
