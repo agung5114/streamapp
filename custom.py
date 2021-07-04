@@ -17,8 +17,7 @@ import plotly.graph_objects as go
 import joblib
 from PIL import Image
 
-"""ML App with Streamlit"""
-st.title("Analytics Sample-Application")
+st.title("Data Analytics Sample App")
 menu = ["EDA","DataViz","Sample Story","Sample Prediction"]
 choice = st.sidebar.selectbox("Select Menu", menu)
 if choice == "EDA":
