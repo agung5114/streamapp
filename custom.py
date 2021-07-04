@@ -139,4 +139,9 @@ elif choice == "Sample Prediction":
 
     if st.button("Click Here to Classify"):
         prediction = knn_clf.predict(input_variables)
-        st.image(setosa) if prediction == 0 else st.image(versicolor)  if prediction == 1 else st.image(virginica)
+        if prediction == 0:
+            st.image(setosa)
+        elif prediction == 1:
+            st.image(versicolor)
+        else:
+            st.image(virginica)
