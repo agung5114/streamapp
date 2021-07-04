@@ -27,7 +27,7 @@ if choice == "EDA":
         st.dataframe(df.head())
     else:
         st.write("No Dataset To Show")
-    st.subheader("Exploratory Data Analysis")
+    st.subheader("Automated Exploratory Data Analysis")
     if data is not None:
         if st.checkbox("Show Shape"):
             st.write(df.shape)
