@@ -15,7 +15,7 @@ import plotly.graph_objects as go
 
 import joblib
 import locale
-locale.setlocale(locale.LC_ALL, 'German')
+locale.setlocale(locale.LC_ALL, 'en_us')
 float_formatter = "{:.0f}".format
 
 st.set_page_config(layout="wide")
