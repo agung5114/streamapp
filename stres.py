@@ -105,7 +105,7 @@ if emiten == "All":
 else:
     dfs = dfs[dfs['Nama_emiten'].isin([emiten])]
 
-pend = int(dfs.Pendapatan.sum()/dfs.Pendapatan.count()
+pend = int(dfs.Pendapatan.sum()/dfs.Pendapatan.count())
 rev_val = locale.format_string('%.0f', int(dfs.Pendapatan.sum()/dfs.Pendapatan.count()),True)
 cogs_val = locale.format_string('%.0f', int(dfs.HPP_nom.sum()/dfs.HPP_nom.count()),True)
 exp_val = locale.format_string('%.0f', int(dfs.Beban_nom.sum()/dfs.Beban_nom.count()),True)
