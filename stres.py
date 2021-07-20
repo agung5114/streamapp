@@ -105,15 +105,16 @@ if emiten == "All":
 else:
     dfs = dfs[dfs['Nama_emiten'].isin([emiten])]
 
+pend = int(dfs.Pendapatan.sum()/dfs.Pendapatan.count()
 rev_val = locale.format_string('%.0f', int(dfs.Pendapatan.sum()/dfs.Pendapatan.count()),True)
 cogs_val = locale.format_string('%.0f', int(dfs.HPP_nom.sum()/dfs.HPP_nom.count()),True)
 exp_val = locale.format_string('%.0f', int(dfs.Beban_nom.sum()/dfs.Beban_nom.count()),True)
 
 c1 ,c2= st.beta_columns((1,1))
 with c1:
-    revenue = st.number_input(label="Total Pendapatan (Rp)",value=rev_val)
-    cogs = st.number_input(label="Total HPP (Rp)",value=cogs_val)
-    expense = st.number_input(label="Total Beban (Rp)",value=exp_val)
+    revenue = st.text_input(label="Total Pendapatan (Rp)",value=f"Prediksi Index: {pend:.2f}")
+    cogs = st.text_input(label="Total HPP (Rp)",value=cogs_val)
+    expense = st.text_input(label="Total Beban (Rp)",value=exp_val)
 with c2:
     eps_g = st.number_input(label="EPS Growth (%)",value=float(100*dfs['EPS_growth'].sum()/dfs['EPS_growth'].count()))
     eps_q = st.number_input(label="ROE (%)",value=100*dfs['ROE'].sum()/dfs['ROE'].count())
