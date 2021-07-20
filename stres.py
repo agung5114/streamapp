@@ -112,7 +112,8 @@ exp_val = locale.format_string('%.0f', int(dfs.Beban_nom.sum()/dfs.Beban_nom.cou
 
 c1 ,c2= st.beta_columns((1,1))
 with c1:
-    revenue = st.text_input(label="Total Pendapatan (Rp)",value=f"Prediksi Index: {pend:.2f}")
+    revenue = st.text_input(label="Total Pendapatan (Rp)",value=rev_val)
+#     revenue = st.text_input(label="Total Pendapatan (Rp)",value=f"Prediksi Index: {pend:.2f}")
     cogs = st.text_input(label="Total HPP (Rp)",value=cogs_val)
     expense = st.text_input(label="Total Beban (Rp)",value=exp_val)
 with c2:
