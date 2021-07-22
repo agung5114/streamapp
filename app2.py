@@ -89,12 +89,19 @@ def main():
             with col2:
                 st.success("Prediction Probability")
                 # st.write(probability)
+                # st.write(proba_sentiment)
                 proba_df = pd.DataFrame(probability,columns=pipe_lr.classes_)
+                proba_sent_df = pd.DataFrame(proba_sentiment,columns=pipe_ctm.classes_)
                 # st.write(proba_df.T)
-                proba_df_clean = proba_df.T.reset_index()
-                proba_df_clean.columns = ["emotions","probability"]
+                # st.write(proba_sent_df.T)
+                # proba_df_clean = proba_df.T.reset_index()
+                # proba_df_clean.columns = ["emotions","probability"]
+                proba_df_sent_clean = proba_sent_df.T.reset_index()
+                proba_df_sent_clean.columns = ["sentiments","probability"]
 
-                fig = alt.Chart(proba_df_clean).mark_bar().encode(x='emotions',y='probability',color='emotions')
+                # fig = alt.Chart(proba_df_clean).mark_bar().encode(x='emotions',y='probability',color='emotions')
+                # st.altair_chart(fig,use_container_width=True)
+                fig = alt.Chart(proba_df_sent_clean).mark_bar().encode(x='sentiments',y='probability',color='sentiments')
                 st.altair_chart(fig,use_container_width=True)
 
 
