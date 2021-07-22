@@ -49,7 +49,7 @@ emotions_emoji_dict = {"anger":"😠","disgust":"🤮", "fear":"😨😱", "happ
 # Main Application
 # def main():
 st.title("Emotion Classifier App")
-menu = ["Home","NER"]
+menu = ["Home"]
 choice = st.sidebar.selectbox("Menu",menu)
 # create_page_visited_table()
 # create_emotionclf_table()
@@ -93,25 +93,3 @@ if choice == "Home":
 
 			fig = alt.Chart(proba_df_clean).mark_bar().encode(x='emotions',y='probability',color='emotions')
 			st.altair_chart(fig,use_container_width=True)
-
-elif choice == "NER":
-	# NLP Pkgs
-	import spacy_streamlit
-	import spacy
-
-	nlp = spacy.load("en_core_web_sm")
-	st.subheader("Named Entity Recognition")
-	with st.form(key='ner_form'):
-		raw_text = st.text_area("Your Text","Enter Text Here")
-		submit_text = st.form_submit_button(label='Submit')
-		translated = translator.translate(raw_text)
-		docx = nlp(translated.text)
-	if submit_text:
-		st.write(translated.text)
-		spacy_streamlit.visualize_ner(docx,labels=nlp.get_pipe('ner').labels)
-	
-	if st.button("Tokenize"):
-		spacy_streamlit.visualize_tokens(docx,attrs=['text','pos_','dep_','ent_type_'])
-
-# if __name__ == '__main__':
-# 	main()
