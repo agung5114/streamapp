@@ -15,10 +15,10 @@ pipe_lr = joblib.load(open("modelnlp.pkl","rb"))
 # Track Utils
 # from track_utils import create_page_visited_table,add_page_visited_details,view_all_page_visited_details,add_prediction_details,view_all_prediction_details,create_emotionclf_table
 
-# Googletrans unofficial
-from googletrans import Translator, constants
-from pprint import pprint
-translator = Translator(service_urls=["translate.google.co.id","translate.google.com"])
+# # Googletrans unofficial
+# from googletrans import Translator, constants
+# from pprint import pprint
+# translator = Translator(service_urls=["translate.google.co.id","translate.google.com"])
 
 import tweepy
 # api key
@@ -49,7 +49,7 @@ emotions_emoji_dict = {"anger":"😠","disgust":"🤮", "fear":"😨😱", "happ
 # Main Application
 # def main():
 st.title("Emotion Classifier App")
-menu = ["Home"]
+menu = ["Home","NER"]
 choice = st.sidebar.selectbox("Menu",menu)
 # create_page_visited_table()
 # create_emotionclf_table()
@@ -68,16 +68,17 @@ if choice == "Home":
 			raw_text.append(tweet.text)
 		raw_text = raw_text[0]
 		col1,col2  = st.beta_columns(2)
-		translated = translator.translate(raw_text)
-		prediction = predict_emotions(translated.text)
-		probability = get_prediction_proba(translated.text)
+		# translated = translator.translate(raw_text)
+		# translated = raw_text
+		prediction = predict_emotions(raw_text)
+		probability = get_prediction_proba(raw_text)
 		
 		# add_prediction_details(raw_text,prediction,np.max(probability),datetime.now())
 
 		with col1:
 			st.success("Search Result")
 			st.write(raw_text)
-			st.write(translated.text)
+			# st.write(translated.text)
 			st.success("Prediction")
 			emoji_icon = emotions_emoji_dict[prediction]
 			st.write("{}:{}".format(prediction,emoji_icon))
