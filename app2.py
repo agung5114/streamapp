@@ -13,7 +13,6 @@ import joblib
 pipe_lr = joblib.load(open("modelnlp.pkl","rb"))
 pipe_ctm = joblib.load(open("model_custom.pkl","rb"))
 
-
 import tweepy
 # api key
 api_key = "l5FGlSMhD3FOB1phnwB7I9sX5"
@@ -64,11 +63,12 @@ def main():
             submit_text = st.form_submit_button(label='Submit')
 
         if submit_text:	
-            hasilSearch = api.search(q=str(search_text),count=1)
-            raw_text = []
+            hasilSearch = api.search(q=str(search_text),count=2)
+            texts = []
             for tweet in hasilSearch:
-                raw_text.append(tweet.text)
-            raw_text = raw_text[0]
+                texts.append(tweet.text)
+            # raw_text2 = texts[1]
+            raw_text = texts[0]
             # translated = translator.translate(raw_text)
             # translated = raw_text
             prediction = predict_emotions(raw_text)
@@ -79,6 +79,7 @@ def main():
             with col1:
                 st.success("Search Result")
                 st.write(raw_text)
+                # st.write(raw_text2)
                 # st.write(translated.text)
                 st.success("Prediction")
                 emoji_icon = emotions_emoji_dict[prediction]
