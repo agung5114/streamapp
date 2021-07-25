@@ -288,8 +288,7 @@ def main():
                 # st.write(prediksi)
                 for p in prediksi:
                     yaxis.append(p)
-                # st.write(yaxis)
-		last = df.index[-1]
+                last = df.index[-1]
                 dfnew = df.drop(df.index[len(yaxis):last+1])
                 dfnew['prediction'] = yaxis
                 dfnew.iloc[:,0] = dfnew.iloc[:,0].astype('str')
