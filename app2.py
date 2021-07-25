@@ -55,7 +55,7 @@ emoji_sentiment = {"positif":"🤗","negatif":"😔","netral":"😐","tdk-releva
 # Main Application
 def main():
     st.title("Machine Learning Web Application")
-    menu = ["Sentiment","EDA","DataViz","Story","Classification","Timeseries]
+    menu = ["Sentiment","EDA","DataViz","Story","Classification","Timeseries"]
     choice = st.sidebar.selectbox("Select Menu", menu)
     if choice == "EDA":
         data = st.file_uploader("Upload Dataset", type=["csv","txt"])
