@@ -232,78 +232,78 @@ def main():
                 # st.altair_chart(fig,use_container_width=True)
                 fig = alt.Chart(proba_df_sent_clean).mark_bar().encode(x='sentiments',y='probability',color='sentiments')
                 st.altair_chart(fig,use_container_width=True)
-        
-        # elif choice == "SocialNetworkAnalysis":
-	elif choice == "Timeseries":
-	    	import plotly.io as pio
-		pio.templates.default = "seaborn"
-		# Timeseries model
-		from statsmodels.tsa.holtwinters import ExponentialSmoothing
-		def create_model(col,seasonal):
-		    col = str(col)
-		    tr = ['add', 'mul']
-		    ss = ['add', 'mul']
-		    dp = [True, False]
-		    combs = {}
-		    aics = []
 
-		    # iterasi kombinasi option
-		    for i in tr:
-			for j in ss:
-			    for k in dp:
-				model = ExponentialSmoothing(data[col], trend=i, seasonal=j, seasonal_periods=seasonal, damped_trend=k)
-				model = model.fit()
-				combs.update({model.aic : [i, j, k]})
-				aics.append(model.aic)
+            
+    elif choice == "Timeseries":
+	import plotly.io as pio
+	pio.templates.default = "seaborn"
+	# Timeseries model
+	from statsmodels.tsa.holtwinters import ExponentialSmoothing
+	def create_model(col,seasonal):
+	    col = str(col)
+	    tr = ['add', 'mul']
+	    ss = ['add', 'mul']
+	    dp = [True, False]
+	    combs = {}
+	    aics = []
 
-		    # forecasting dengan kombinasi terbaik            
-		    best_aic = min(aics)
-		    model = ExponentialSmoothing(data[col], trend=combs[best_aic][0], seasonal=combs[best_aic][1], seasonal_periods=12, damped_trend=combs[best_aic][2])
+	    # iterasi kombinasi option
+	    for i in tr:
+		for j in ss:
+		    for k in dp:
+			model = ExponentialSmoothing(data[col], trend=i, seasonal=j, seasonal_periods=seasonal, damped_trend=k)
+			model = model.fit()
+			combs.update({model.aic : [i, j, k]})
+			aics.append(model.aic)
 
-		    # output
-		    fit = model.fit()
-		    return fit
+	    # forecasting dengan kombinasi terbaik            
+	    best_aic = min(aics)
+	    model = ExponentialSmoothing(data[col], trend=combs[best_aic][0], seasonal=combs[best_aic][1], seasonal_periods=12, damped_trend=combs[best_aic][2])
 
-		st.subheader("Time Series Prediction")
-		data = st.file_uploader("Upload Dataset", type=["xlsx"])
-		kolom = []
-		if data is None:
-		    st.write('Please upload timeseries file (xlsx)')
-		else:
-		    df = pd.read_excel(data)
-		    data = df.dropna()
-		    st.write(data.head())
-		    kolom = data.columns.tolist()
-		    pilih = st.selectbox('Pilih Kolom',kolom)
-		    xaxis = data.iloc[:,0].astype('str')
-		    fig1 = px.line(x=xaxis,y =data[pilih])
-		    st.plotly_chart(fig1)
-		    seasonal = st.number_input('Seasonal_periods',value=12,max_value=48,min_value=1,step=1)
-		    pred_period = st.number_input('Prediction_periods',value=6,max_value=48,min_value=1,step=1)
-		    # submit_data = st.form_submit_button(label='Create_model')
-		    if st.button('Create_model and Run_Prediction'):
-			st.success("Create Model Success")
-			tsmodel = create_model(pilih,seasonal)
-			prediksi = list(tsmodel.forecast(pred_period))
-			yaxis = data[pilih].tolist()
-			# st.write(prediksi)
-			for p in prediksi:
-			    yaxis.append(p)
-			# st.write(yaxis)
-			dfnew = df.drop(df.index[len(yaxis):84])
-			dfnew['prediction'] = yaxis
-			dfnew.iloc[:,0] = dfnew.iloc[:,0].astype('str')
-			# dfnew = dfnew.dropna()
-			fig2 = go.Figure()
-			fig2.add_trace(go.Scatter(x=dfnew.iloc[:,0], y=dfnew['prediction'],
-					# line = dict(color='firebrick', width=4, dash='dot'),
-					mode='lines+markers',
-					name='prediction'))
-			fig2.add_trace(go.Scatter(x=dfnew.iloc[:,0], y=dfnew[pilih],
-					# line = dict(color='firebrick', width=4, dash='dot'),
-					mode='lines+markers',
-					name='actual'))
-			st.plotly_chart(fig2)
+	    # output
+	    fit = model.fit()
+	    return fit
+
+	st.subheader("Time Series Prediction")
+	data = st.file_uploader("Upload Dataset", type=["xlsx"])
+	kolom = []
+	if data is None:
+	    st.write('Please upload timeseries file (xlsx)')
+	else:
+	    df = pd.read_excel(data)
+	    data = df.dropna()
+	    st.write(data.head())
+	    kolom = data.columns.tolist()
+	    pilih = st.selectbox('Pilih Kolom',kolom)
+	    xaxis = data.iloc[:,0].astype('str')
+	    fig1 = px.line(x=xaxis,y =data[pilih])
+	    st.plotly_chart(fig1)
+	    seasonal = st.number_input('Seasonal_periods',value=12,max_value=48,min_value=1,step=1)
+	    pred_period = st.number_input('Prediction_periods',value=6,max_value=48,min_value=1,step=1)
+	    # submit_data = st.form_submit_button(label='Create_model')
+	    if st.button('Create_model and Run_Prediction'):
+		st.success("Create Model Success")
+		tsmodel = create_model(pilih,seasonal)
+		prediksi = list(tsmodel.forecast(pred_period))
+		yaxis = data[pilih].tolist()
+		# st.write(prediksi)
+		for p in prediksi:
+		    yaxis.append(p)
+		# st.write(yaxis)
+		dfnew = df.drop(df.index[len(yaxis):84])
+		dfnew['prediction'] = yaxis
+		dfnew.iloc[:,0] = dfnew.iloc[:,0].astype('str')
+		# dfnew = dfnew.dropna()
+		fig2 = go.Figure()
+		fig2.add_trace(go.Scatter(x=dfnew.iloc[:,0], y=dfnew['prediction'],
+				# line = dict(color='firebrick', width=4, dash='dot'),
+				mode='lines+markers',
+				name='prediction'))
+		fig2.add_trace(go.Scatter(x=dfnew.iloc[:,0], y=dfnew[pilih],
+				# line = dict(color='firebrick', width=4, dash='dot'),
+				mode='lines+markers',
+				name='actual'))
+		st.plotly_chart(fig2)
 
 if __name__ == '__main__':
     main()
