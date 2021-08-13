@@ -272,7 +272,7 @@ def main():
             df = pd.read_excel(data)
             data = df.dropna()
             st.write(data.head())
-#             data.iloc[0]
+            df['yyyy-mm'] = pd.to_datetime(df['Date']).dt.strftime('%Y-%m')
 #             st.write(data.head())
 #             st.write(data.head())
 #             st.write(data.head())
