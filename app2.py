@@ -257,7 +257,7 @@ def main():
 
             # forecasting dengan kombinasi terbaik            
             best_aic = min(aics)
-            model = ExponentialSmoothing(data[col], trend=combs[best_aic][0], seasonal=combs[best_aic][1], seasonal_periods=12, damped_trend=combs[best_aic][2])
+            model = ExponentialSmoothing(data[col], trend=combs[best_aic][0], seasonal=combs[best_aic][1], seasonal_periods=seasonal, damped_trend=combs[best_aic][2])
 
             # output
             fit = model.fit()
