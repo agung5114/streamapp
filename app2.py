@@ -281,8 +281,8 @@ def main():
             xaxis = data.iloc[:,0].astype('str')
             fig1 = px.line(x=xaxis,y =data[pilih])
             st.plotly_chart(fig1)
-            seasonal = st.number_input('Seasonal_periods',value=12,max_value=120,min_value=1,step=1)
-            pred_period = st.number_input('Prediction_periods',value=6,max_value=120,min_value=1,step=1)
+            seasonal = st.number_input('Seasonal_periods',value=12,max_value=len(data),min_value=1,step=1)
+            pred_period = st.number_input('Prediction_periods',value=6,max_value=len(data),min_value=1,step=1)
             # submit_data = st.form_submit_button(label='Create_model')
             if st.button('Create_model and Run_Prediction'):
                 st.success("Create Model Success")
