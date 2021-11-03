@@ -265,20 +265,18 @@ def main():
 
         st.subheader("Time Series Prediction")
         dt = st.file_uploader("Upload Dataset", type=["xlsx"])
-        kolom = []
         if dt is None:
-#             st.write('Please upload timeseries file (xlsx)')
+            kolom = ['Pendapatan','Belanja']
             df = pd.read_excel('APBD Series.xlsx')
+	
         else:
-            df = pd.read_excel(dt)
+            kolom = dt.columns.tolist()
+	    df = pd.read_excel(dt)
 
         data = df.dropna()
 #             st.write(data.head())
         data['yyyy-mm'] = pd.to_datetime(data['Date']).dt.strftime('%Y-%m')
         st.write(data.head())
-#             st.write(data.head())
-#             st.write(data.head())
-        kolom = data.columns.tolist()
         pilih = st.selectbox('Pilih Kolom',kolom)
         xaxis = data.iloc[:,0].astype('str')
         fig1 = px.line(x=xaxis,y =data[pilih])
