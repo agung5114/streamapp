@@ -118,15 +118,15 @@ if choice == "Allocation & Outcome":
     
     with c3:
         st.subheader("Jumlah Anggaran Dialokasikan (Rp)")
-        st.text_input(label="Ekonomi",value=int(base*a/100))
-        st.text_input(label="Kesehatan",value=int(base*b/100))
-        st.text_input(label="Ketertiban",value=int(base*c/100))
-        st.text_input(label="Lingkungan",value=int(base*d/100))
-        st.text_input(label="Pariwisata_Budaya",value=int(base*e/100))
-        st.text_input(label="Pelayanan",value=int(base*f/100))
-        st.text_input(label="Pendidikan",value=int(base*g/100))
-        st.text_input(label="Sosial",value=int(base*h/100))
-        st.text_input(label="Rumah_Fasum",value=int(base*i/100))
+        st.text_input(label="Ekonomi",value="Rp {:,.0f}".format(int(base*a/100)))
+        st.text_input(label="Kesehatan",value="Rp {:,.0f}".format(int(base*b/100)))
+        st.text_input(label="Ketertiban",value="Rp {:,.0f}".format(int(base*c/100)))
+        st.text_input(label="Lingkungan",value="Rp {:,.0f}".format(int(base*d/100)))
+        st.text_input(label="Pariwisata_Budaya",value="Rp {:,.0f}".format(int(base*e/100)))
+        st.text_input(label="Pelayanan",value="Rp {:,.0f}".format(int(base*f/100)))
+        st.text_input(label="Pendidikan",value="Rp {:,.0f}".format(int(base*g/100)))
+        st.text_input(label="Sosial",value="Rp {:,.0f}".format(int(base*h/100)))
+        st.text_input(label="Rumah_Fasum",value="Rp {:,.0f}".format(int(base*i/100)))
         
     with c4:
         st.write("")
