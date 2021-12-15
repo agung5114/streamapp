@@ -221,6 +221,7 @@ elif choice == 'Anomali':
             dfall = df[['Base_IPM','Base_AHH','Base_HLS','Base_RLS','Base_PPK',"Ekonomi","Kesehatan","Ketertiban","Lingkungan","ParBud","Pelayanan","Pendidikan","Sosial","Rumah_Fasum"]]
             z0, z1, z2 = st.beta_columns((1,1,1))
             with z0:
+                st.write("Correlation Matrix All Variables")
                 st.write(sns.heatmap(dfall.corr(),annot=True,annot_kws={"size": 6}))
                 st.pyplot()
             with z1:
