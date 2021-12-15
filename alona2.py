@@ -208,8 +208,8 @@ elif choice == 'Anomali':
         # st.subheader('Automated Exploratory Data Analysis')
         df = pd.read_excel('belanja_apbd_full.xlsx')
         df.loc[:,'Total'] = df.sum(numeric_only=True, axis=1)
-        df = df.style.format("{:,.0f}")
-        st.dataframe(df.head())
+#         df = df.style.format("{:,.0f}")
+        st.dataframe(df.style.format("{:,.0f}")
         if st.checkbox('Show Shape'):
             st.write(df.shape)
         if st.checkbox('Show Summary'):
