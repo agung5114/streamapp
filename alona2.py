@@ -261,7 +261,7 @@ elif choice == 'Anomali':
         st.subheader('Anomali Detection from Trends and Outliers Analysis ')
         index = st.selectbox('Pilih Index',['IPM','AHH','HLS','RLS','PPK'])
         anggaran = st.selectbox('Pilih Jenis Fungsi',["All","Ekonomi","Kesehatan","Ketertiban","Lingkungan","ParBud","Pelayanan","Pendidikan","Sosial","Rumah_Fasum"])
-        pemda = st.multiselect('Pilih Pemda',df['nama_pemda'])
+        pemda = st.multiselect('Pilih Pemda',df['nama_pemda'].unique())
         df['TotalPerkapita'] = df['Total_anggaran']/df['Populasi']
         df['ek'] = df['Ekonomi']/df['Populasi']
         df['ks'] = df['Kesehatan']/df['Populasi']
