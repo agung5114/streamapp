@@ -90,7 +90,7 @@ if choice == "Allocation & Outcome":
     with k2:
         st.write(" ")
     with k3:
-        perkapita = st.write(f"Anggaran Perkapita Akan Dialokasikan: {base/pop:.2f}")
+        perkapita = st.write("Anggaran Perkapita Akan Dialokasikan: Rp {:,.0f}".format(int(base/pop)))
 
     c1, c2 ,c3, c4, c5= st.beta_columns((1,1,1,0.5,2))
     with c1:
