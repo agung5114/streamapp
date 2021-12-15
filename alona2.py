@@ -216,8 +216,15 @@ elif choice == 'Anomali':
         if st.checkbox('Show Summary'):
             st.write(df.describe())
         if st.checkbox('Correlation Matrix'):
-            st.write(sns.heatmap(df.corr(),annot=True,annot_kws={"size": 3.8}))
-            st.pyplot()
+            dfcor2 = df[['Base_IPM','Base_AHH','Base_HLS','Base_RLS','Base_PPK']]
+            dfcor1 = df[["Ekonomi","Kesehatan","Ketertiban","Lingkungan","ParBud","Pelayanan","Pendidikan","Sosial","Rumah_Fasum"]]
+            z1, z2 = st.beta_columns((1,1))
+            with z1:
+                st.write(sns.heatmap(dfcor1.corr(),annot=True,annot_kws={"size": 3}))
+                st.pyplot()
+            with z2:
+                st.write(sns.heatmap(dfcor2.corr(),annot=True,annot_kws={"size": 3}))
+                st.pyplot()
         plot_type = st.selectbox('Select Type of Plot',["bar","line","area","hist","box"])
         all_columns = ["Total","Ekonomi","Kesehatan","Ketertiban","Lingkungan","ParBud","Pelayanan","Pendidikan","Sosial","Rumah_Fasum","Populasi"]
         pemda = st.multiselect('Pilih Pemda',df['nama_pemda'])
