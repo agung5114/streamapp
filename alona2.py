@@ -58,8 +58,8 @@ if choice == "Allocation & Outcome":
         st.write("")
     with p3:
         # st.write(f"Total Populasi: {pop:.0f} (2019)")
-        lytotal = st.text_input(label="Total Anggaran Tahun Terakhir",value=int(lybudget.values))
-        lypkp = st.text_input(label="Anggaran Perkapita",value=int(lybudget.values/pop))
+        lytotal = st.text_input(label="Total Anggaran Tahun Terakhir",value="Rp {:,.0f}".format(int(lybudget.values)))
+        lypkp = st.text_input(label="Anggaran Perkapita",value="Rp {:,.0f}".format(int(lybudget.values/pop)))
         # perkapita = st.write(f"Anggaran Perkapita Akan Dialokasikan: {base/pop:.2f}")
     # with p3:
     #     st.write(" ")
@@ -78,8 +78,9 @@ if choice == "Allocation & Outcome":
         # allbase = lybudget.values
         # alcpkp = lybudget.values/pop
         # base = st.number_input(label="Total Anggaran Akan Dialokasikan",value=allbase,min_value=0, max_value=1000000000000000)
-        base = st.number_input(label="Total Anggaran Akan Dialokasikan",value=allbase,min_value=0, max_value=1000000000000000,step=10000000000)
-        # base = int(base)
+#         base = st.number_input(label="Total Anggaran Akan Dialokasikan",value=allbase,min_value=0, max_value=1000000000000000,step=10000000000)
+        base = int(base)
+        st.text_input(label="Total Anggaran Akan Dialokasikan",value="Rp {:,.0f}".format(base))
         # pkp = st.text_input(label="Anggaran Perkapita Akan Dialokasikan",value=alpkp)
     # perkapita = st.write(f"Anggaran Perkapita Akan Dialokasikan: {base/pop:.2f}")
 
