@@ -219,12 +219,13 @@ elif choice == 'Anomali':
             dfcor2 = df[['Base_IPM','Base_AHH','Base_HLS','Base_RLS','Base_PPK']]
             dfcor1 = df[["Ekonomi","Kesehatan","Ketertiban","Lingkungan","ParBud","Pelayanan","Pendidikan","Sosial","Rumah_Fasum"]]
             dfall = df[['Base_IPM','Base_AHH','Base_HLS','Base_RLS','Base_PPK',"Ekonomi","Kesehatan","Ketertiban","Lingkungan","ParBud","Pelayanan","Pendidikan","Sosial","Rumah_Fasum"]]
-            st.write(sns.heatmap(dfall.corr(),annot=True,annot_kws={"size": 6}))
-            st.pyplot()
-            z1, z2 = st.beta_columns((1,1))
+            z0, z1, z2 = st.beta_columns((1,1,1))
+            with z0:
+                st.write(sns.heatmap(dfall.corr(),annot=True,annot_kws={"size": 6}))
+                st.pyplot()
             with z1:
                 st.write("Correlation Matrix Fungsi")
-                st.write(sns.heatmap(dfcor1.corr(),annot=True,annot_kws={"size": 12}))
+                st.write(sns.heatmap(dfcor1.corr(),annot=True,annot_kws={"size": 10}))
                 st.pyplot()
             with z2:
                 st.write("Correlation Matrix Index")
