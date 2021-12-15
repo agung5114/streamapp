@@ -304,6 +304,8 @@ elif choice == 'Anomali':
                 fig1 = px.scatter(dfp, x='nama_pemda', y="so",color='Tahun')
             elif anggaran == "Rumah_Fasum":
                 fig1 = px.scatter(dfp, x='nama_pemda', y="fs",color='Tahun')
+                
+            fig1.update_traces(marker_size=20, selector=dict(type='scatter'))
             st.plotly_chart(fig1)
 
         with c2:
