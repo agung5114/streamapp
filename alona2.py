@@ -281,8 +281,10 @@ elif choice == 'Anomali':
         with c1:
             if pemda == None or pemda ==[]:
                 dfp = df
+                msize=10
             else:
                 dfp = df[df['nama_pemda'].isin(pemda)]
+                msize=20
 
             if anggaran == "All":
                 fig1 = px.scatter(dfp, x='nama_pemda', y='TotalPerkapita',color='Tahun')
@@ -305,7 +307,7 @@ elif choice == 'Anomali':
             elif anggaran == "Rumah_Fasum":
                 fig1 = px.scatter(dfp, x='nama_pemda', y="fs",color='Tahun')
                 
-            fig1.update_traces(marker_size=20, selector=dict(type='scatter'))
+            fig1.update_traces(marker_size=msize, selector=dict(type='scatter'))
             st.plotly_chart(fig1)
 
         with c2:
