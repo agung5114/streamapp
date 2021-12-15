@@ -79,7 +79,7 @@ if choice == "Allocation & Outcome":
         # alcpkp = lybudget.values/pop
         # base = st.number_input(label="Total Anggaran Akan Dialokasikan",value=allbase,min_value=0, max_value=1000000000000000)
 #         base = st.number_input(label="Total Anggaran Akan Dialokasikan",value=allbase,min_value=0, max_value=1000000000000000,step=10000000000)
-        base = int(base)
+        base = int(allbase)
         st.text_input(label="Total Anggaran Akan Dialokasikan",value="Rp {:,.0f}".format(base))
         # pkp = st.text_input(label="Anggaran Perkapita Akan Dialokasikan",value=alpkp)
     # perkapita = st.write(f"Anggaran Perkapita Akan Dialokasikan: {base/pop:.2f}")
