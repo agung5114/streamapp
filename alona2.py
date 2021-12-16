@@ -19,7 +19,7 @@ st.sidebar.image(alona)
 choice = st.sidebar.selectbox('Select Menu', menu)
 
 if choice == "Allocation & Outcome":
-    st.subheader("Alokasi Anggaran dan Prediksi Perubahan Index")
+    st.subheader("Budget Allocations and Prediction of Indexes")
     df = pd.read_excel('belanja_apbd_full.xlsx')
     new = df["nama_pemda"].str.split(" ", n = 1, expand = True)
     df["jenispemda"]= new[0]
@@ -28,13 +28,13 @@ if choice == "Allocation & Outcome":
     df['wilayah'] = np.where(df['jenispemda'].str.contains("Provinsi"), "Provinsi", "Kab_Kota")
     p1, p2, p3 = st.beta_columns((4,0.5,4))
     with p1:
-        wilayah = st.selectbox('Pilih Jenis Wilayah',['Provinsi','Kab_Kota'])
+        wilayah = st.selectbox('Choose Region',['Provinsi','Kab_Kota'])
         if wilayah == 'Provinsi':
             df = df[df['wilayah'].isin(['Provinsi'])]
         else:
             df = df[df['wilayah'].isin(['Kab_Kota'])]
         lokasi = df['nama_pemda'].unique()
-        kota = st.selectbox('Pilih Daerah',lokasi)
+        kota = st.selectbox('Choose Local Government',lokasi)
         df = df[df['nama_pemda'].isin([kota])]
         df = df[df['Tahun'].isin([2019])]
         lybudget = df.sum(axis=1)
@@ -58,21 +58,21 @@ if choice == "Allocation & Outcome":
         st.write("")
     with p3:
         # st.write(f"Total Populasi: {pop:.0f} (2019)")
-        lytotal = st.text_input(label="Total Anggaran Tahun Terakhir",value="Rp {:,.0f}".format(int(lybudget.values)))
-        lypkp = st.text_input(label="Anggaran Perkapita",value="Rp {:,.0f}".format(int(lybudget.values/pop)))
+        lytotal = st.text_input(label="Last Year Budget",value="Rp {:,.0f}".format(int(lybudget.values)))
+        lypkp = st.text_input(label="Per Capita Budget",value="Rp {:,.0f}".format(int(lybudget.values/pop)))
         # perkapita = st.write(f"Anggaran Perkapita Akan Dialokasikan: {base/pop:.2f}")
     # with p3:
     #     st.write(" ")
     t1, t2 ,t3,t4= st.beta_columns((4,0.5,2,2))
     with t1:
-        st.text_input(label="Total Populasi",value=int(pop))
+        st.text_input(label="Total Population",value=int(pop))
         # st.write('(Populasi Penduduk Tahun 2019)')
     with t2:
         st.write(" ")
     with t3:
         # st.text_input(label="% Perubahan Anggaran: ",value=str(int(100*((base-lybudget.values)/lybudget.values)))+" %")
         # st.text_input(label="% Perubahan Perkapita: ",value=str(int(100*((base/pop-lybudget.values/pop)/lybudget.values/pop)))+" %")
-        basechange = st.number_input(label="% Penyesuaian Anggaran",value=0,min_value=-100, max_value=100, step=5)
+        basechange = st.number_input(label="% Budget Adjustment",value=0,min_value=-100, max_value=100, step=5)
         allbase = int((basechange/100)*int(lybudget.values)+int(lybudget.values))
     with t4:
         # allbase = lybudget.values
@@ -80,21 +80,21 @@ if choice == "Allocation & Outcome":
         # base = st.number_input(label="Total Anggaran Akan Dialokasikan",value=allbase,min_value=0, max_value=1000000000000000)
 #         base = st.number_input(label="Total Anggaran Akan Dialokasikan",value=allbase,min_value=0, max_value=1000000000000000,step=10000000000)
         base = int(allbase)
-        st.text_input(label="Total Anggaran Akan Dialokasikan",value="Rp {:,.0f}".format(base))
+        st.text_input(label="Planned Budget",value="Rp {:,.0f}".format(base))
         # pkp = st.text_input(label="Anggaran Perkapita Akan Dialokasikan",value=alpkp)
     # perkapita = st.write(f"Anggaran Perkapita Akan Dialokasikan: {base/pop:.2f}")
 
     k1,k2,k3= st.beta_columns((4,0.5,4))
     with k1:
-        st.write('(Populasi Penduduk Tahun 2019)')
+        st.write('(Population in 2019)')
     with k2:
         st.write(" ")
     with k3:
-        perkapita = st.write("Anggaran Perkapita Akan Dialokasikan: Rp {:,.0f}".format(int(base/pop)))
+        perkapita = st.write("Planned Per Capita Budget: Rp {:,.0f}".format(int(base/pop)))
 
     c1, c2 ,c3, c4, c5= st.beta_columns((1,1,1,0.5,2))
     with c1:
-        st.subheader("Alokasi Tahun Sebelumnya (Rp)")
+        st.subheader("Last Year Budget Allocation")
         st.text_input(label="Ekonomi",value="Rp {:,.0f}".format(df['Ekonomi'].sum()))
         st.text_input(label="Kesehatan",value="Rp {:,.0f}".format(df['Kesehatan'].sum()))
         st.text_input(label="Ketertiban",value="Rp {:,.0f}".format(df['Ketertiban'].sum()))
@@ -105,7 +105,7 @@ if choice == "Allocation & Outcome":
         st.text_input(label="Sosial",value="Rp {:,.0f}".format(df['Sosial'].sum()))
         st.text_input(label="Rumah_Fasum",value="Rp {:,.0f}".format(df['Rumah_Fasum'].sum()))
     with c2:
-        st.subheader("Proporsi Alokasi Anggaran (%)")
+        st.subheader("Allocated Budget Distribution (%)")
         a = st.number_input(label="Ekonomi",value=100*float(ekvalue.values),min_value=0.0, max_value=100.0, step=1.0)
         b = st.number_input(label="Kesehatan",value=100*float(ksvalue.values),min_value=0.0, max_value=100.0, step=1.0)
         c = st.number_input(label="Ketertiban",value=100*float(ktvalue.values),min_value=0.0, max_value=100.0, step=1.0)
@@ -117,7 +117,7 @@ if choice == "Allocation & Outcome":
         i = st.number_input(label="Rumah_Fasum",value=100*float(fsvalue.values),min_value=0.0, max_value=100.0, step=1.0)
     
     with c3:
-        st.subheader("Jumlah Anggaran Dialokasikan (Rp)")
+        st.subheader("Allocated Budget Value")
         st.text_input(label="Ekonomi",value="Rp {:,.0f}".format(int(base*a/100)))
         st.text_input(label="Kesehatan",value="Rp {:,.0f}".format(int(base*b/100)))
         st.text_input(label="Ketertiban",value="Rp {:,.0f}".format(int(base*c/100)))
@@ -131,27 +131,27 @@ if choice == "Allocation & Outcome":
     with c4:
         st.write("")
     with c5:
-        st.subheader("Prediksi Perubahan Index  \nBerdasarkan Machine-Learning Models")
+        st.subheader("Index Change Prediction  \nBased on Machine-Learning Models")
         index = st.selectbox('Pilih Index',['IPM','AHH','HLS','RLS','PPK'])
         if index == "IPM":
-            st.subheader("Nilai IPM Awal")
+            st.subheader("Base IPM Index")
             j = st.number_input(label="Base_IPM",value=base_ipm,min_value=0.0, max_value=100.0, step=1.0)
         elif index == "AHH":
-            st.subheader("Nilai AHH Awal")
+            st.subheader("Base AHH Index")
             j = st.number_input(label="Base_AHH",value=base_ahh,min_value=0.0, max_value=100.0, step=1.0)
         elif index == "HLS":
-            st.subheader("Nilai HLS Awal")
+            st.subheader("Base HLS Index")
             j = st.number_input(label="Base_HLS",value=base_hls,min_value=0.0, max_value=100.0, step=1.0)
         elif index == "RLS":
-            st.subheader("Nilai RLS Awal")
+            st.subheader("Base RLS Index")
             j = st.number_input(label="Base_RLS",value=base_rls,min_value=0.0, max_value=100.0, step=1.0)
         elif index == "PPK":
-            st.subheader("Nilai PPK Awal")
+            st.subheader("Base PPK Index")
             j = st.number_input(label="Base_PPK",value=base_ppk,min_value=0, max_value=30000, step=100)
 
         total = a+b+c+d+e+f+g+h+i
         # st.subheader("Total Alokasi Anggaran: "+str(total)+"%")
-        st.subheader(f"Total Anggaran Dialokasikan: {total:.2f} %")
+        st.subheader(f"Total Distributed Budget: {total:.2f} %")
 
         if index == "IPM":
             model= open("ipm_gb.pkl", "rb")
@@ -165,7 +165,7 @@ if choice == "Allocation & Outcome":
             model= open("ppk_stack.pkl", "rb")
         
         pkl=joblib.load(model)
-        if st.button("Klik disini untuk mendapatkan Nilai Prediksi"):
+        if st.button("Click to run Prediction"):
             a = (base/pop)*(a/100)
             b = (base/pop)*(b/100)
             c = (base/pop)*(c/100)
@@ -199,11 +199,11 @@ if choice == "Allocation & Outcome":
                     'Base_PPK']])
             prediction = pkl.predict(input_variables)
             nilai = j+float(prediction)
-            st.title(f"Prediksi Index: {nilai:.2f}")
-            st.subheader(f"Perubahan Index: {(nilai-j):.2f}")
+            st.title(f"Index Prediction: {nilai:.2f}")
+            st.subheader(f"Index Change: {(nilai-j):.2f}")
 
 elif choice == 'Anomali':
-    st.subheader('Analisis atas Anomali dalam Alokasi Anggaran dan Tingkat Perubahan Index')
+    st.subheader('Anomali Analysis in Budget Allocations')
     if st.checkbox("Exploratory Data Analysis"):
         # df = pd.read_csv('belanja_apbd.csv',sep=";",usecols=["nama_pemda","Tahun","Ekonomi","Kesehatan","Ketertiban","Lingkungan","ParBud","Pelayanan","Pendidikan","Sosial","Rumah_Fasum","Populasi"])
         # st.subheader('Automated Exploratory Data Analysis')
@@ -221,15 +221,15 @@ elif choice == 'Anomali':
             dfall = df[['Base_IPM','Base_AHH','Base_HLS','Base_RLS','Base_PPK',"Ekonomi","Kesehatan","Ketertiban","Lingkungan","ParBud","Pelayanan","Pendidikan","Sosial","Rumah_Fasum"]]
             z0, z1, z2 = st.beta_columns((1,1,1))
             with z0:
-                st.write("Correlation Matrix All Variables")
+                st.write("Correlation Matrix of All Variables")
                 st.write(sns.heatmap(dfall.corr(),annot=True,annot_kws={"size": 6}))
                 st.pyplot()
             with z1:
-                st.write("Correlation Matrix Fungsi")
+                st.write("Correlation Matrix of Budget Functions")
                 st.write(sns.heatmap(dfcor1.corr(),annot=True,annot_kws={"size": 10}))
                 st.pyplot()
             with z2:
-                st.write("Correlation Matrix Index")
+                st.write("Correlation Matrix of Index")
                 st.write(sns.heatmap(dfcor2.corr(),annot=True,annot_kws={"size": 12}))
                 st.pyplot()
         plot_type = st.selectbox('Select Type of Plot',["bar","line","area","hist","box"])
@@ -270,14 +270,14 @@ elif choice == 'Anomali':
             st.write(cust_plot)
             st.pyplot()
         
-    if st.checkbox("Analisis Anggaran vs Index"):
+    if st.checkbox("Budget Allocation Analysis"):
         # df = pd.read_csv('belanja_apbd.csv',sep=";")
         df = pd.read_excel('belanja_apbd_full.xlsx')
         df.loc[:,'Total_anggaran'] = df.sum(numeric_only=True, axis=1)
         st.subheader('Anomali Detection from Trends and Outliers Analysis ')
-        index = st.selectbox('Pilih Index',['IPM','AHH','HLS','RLS','PPK'])
-        anggaran = st.selectbox('Pilih Jenis Fungsi',["All","Ekonomi","Kesehatan","Ketertiban","Lingkungan","ParBud","Pelayanan","Pendidikan","Sosial","Rumah_Fasum"])
-        pemda = st.multiselect('Pilih Pemda',df['nama_pemda'].unique())
+        index = st.selectbox('Choose Index',['IPM','AHH','HLS','RLS','PPK'])
+        anggaran = st.selectbox('Choose Budget Function',["All","Ekonomi","Kesehatan","Ketertiban","Lingkungan","ParBud","Pelayanan","Pendidikan","Sosial","Rumah_Fasum"])
+        pemda = st.multiselect('Choose Local Government',df['nama_pemda'].unique())
         df['TotalPerkapita'] = df['Total_anggaran']/df['Populasi']
         df['ek'] = df['Ekonomi']/df['Populasi']
         df['ks'] = df['Kesehatan']/df['Populasi']
