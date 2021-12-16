@@ -270,7 +270,7 @@ elif choice == 'Anomali':
             st.write(cust_plot)
             st.pyplot()
         
-    if st.checkbox("Budget Allocation Analysis"):
+    if st.checkbox("Budget Allocation vs Index Change Analysis"):
         # df = pd.read_csv('belanja_apbd.csv',sep=";")
         df = pd.read_excel('belanja_apbd_full.xlsx')
         df.loc[:,'Total_anggaran'] = df.sum(numeric_only=True, axis=1)
