@@ -117,7 +117,7 @@ if choice == "Allocation & Outcome":
         i = st.number_input(label="Rumah_Fasum",value=100*float(fsvalue.values),min_value=0.0, max_value=100.0, step=1.0)
     
     with c3:
-        st.subheader("Allocated Budget Value")
+        st.subheader("Value of Budget Allocated")
         st.text_input(label="Ekonomi",value="Rp {:,.0f}".format(int(base*a/100)))
         st.text_input(label="Kesehatan",value="Rp {:,.0f}".format(int(base*b/100)))
         st.text_input(label="Ketertiban",value="Rp {:,.0f}".format(int(base*c/100)))
