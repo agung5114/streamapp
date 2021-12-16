@@ -234,7 +234,7 @@ elif choice == 'Anomali':
                 st.pyplot()
         plot_type = st.selectbox('Select Type of Plot',["bar","line","area","hist","box"])
         all_columns = ["Total","Ekonomi","Kesehatan","Ketertiban","Lingkungan","ParBud","Pelayanan","Pendidikan","Sosial","Rumah_Fasum","Populasi"]
-        pemda = st.multiselect('Pilih Pemda',df['nama_pemda'])
+        pemda = st.multiselect('Choose Local Government',df['nama_pemda'])
         df["Tahun"] = df["Tahun"].astype(str)
         # tahun = st.selectbox('Pilih Tahun',[2019,2018])
         # df = df[df['Tahun'].isin([tahun])]
