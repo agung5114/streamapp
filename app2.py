@@ -139,8 +139,8 @@ def main():
                         marginal_x="box", trendline="ols", template="simple_white")
                 fig2 = px.density_contour(df,x=x2,y=y2, color= color, marginal_y='histogram')
                 st.write(fig1,fig2)
-        else:
-		"No data to show"
+#         else:
+# 		"No data to show"
 #             st.subheader("Storytelling with Data")
 # 	    story = ["gapminder","stocks","iris"]
 # 	    selectedstory = st.sidebar.selectbox("Select Menu", story)
