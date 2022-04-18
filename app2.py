@@ -140,7 +140,36 @@ def main():
                 fig2 = px.density_contour(df,x=x2,y=y2, color= color, marginal_y='histogram')
                 st.write(fig1,fig2)
         else:
-            st.write("No Dataset To Show")
+            st.subheader("Storytelling with Data")
+	    story = ["gapminder","stocks","iris"]
+	    selectedstory = st.sidebar.selectbox("Select Menu", story)
+            if selectedstory == "gapminder":
+                fig = px.scatter(df, x="gdpPercap", y="lifeExp", animation_frame="year", animation_group="country",
+                # fig = px.scatter(px.data.gapminder(), x="gdpPercap", y="lifeExp", animation_frame="year", animation_group="country",
+                size="pop", color="country", hover_name="country", log_x = True, 
+                size_max=100, range_x=[100,100000], range_y=[25,90])
+                fig.update_layout(height=650)
+                st.write(fig)
+            elif selectedstory == "stocks":
+                fig = go.Figure()
+                fig.add_trace(go.Scatter(x=df['date'], y=df['AAPL'], name="Apple"))
+                fig.add_trace(go.Scatter(x=df['date'], y=df['AMZN'], name="Amazon"))
+                fig.add_trace(go.Scatter(x=df['date'], y=df['FB'], name="Facebook"))
+                fig.add_trace(go.Scatter(x=df['date'], y=df['GOOG'], name="Google"))
+                fig.add_trace(go.Scatter(x=df['date'], y=df['NFLX'], name="Netflix"))
+                fig.add_trace(go.Scatter(x=df['date'], y=df['MSFT'], name="Microsoft"))
+                fig.layout.update(title_text='Time Series data with Rangeslider', xaxis_rangeslider_visible=True)
+                st.write(fig)
+            elif selectedstory == "iris":
+                y1= df['sepal_length']
+                x1= df['sepal_width']
+                y2= df['petal_length']
+                x2= df['petal_width']
+                color = df['species']
+                fig1 = px.scatter(df, x=x1, y=y1, color=color, marginal_y="violin",
+                        marginal_x="box", trendline="ols", template="simple_white")
+                fig2 = px.density_contour(df,x=x2,y=y2, color= color, marginal_y='histogram')
+                st.write(fig1,fig2)
         
     elif choice == "Classification":
         st.subheader("Classification Prediction")
